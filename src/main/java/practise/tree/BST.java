@@ -1,5 +1,8 @@
 package practise.tree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class BST {
 
     static class Node {
@@ -81,6 +84,40 @@ public class BST {
       return root;
     }
 
+    public static void printInRange(Node root, int x, int y){
+        if (root == null){
+            return;
+        }
+        if (root.data >= x && root.data <= y){
+            printInRange(root.left, x,y);
+            System.out.println(root.data);
+            printInRange(root.right, x,y);
+        }
+        if (root.data > y){
+            printInRange(root.left, x,y);
+        }else if(root.data < x){
+            printInRange(root.right, x,y);
+        }
+    }
+
+    public static void printPaths(Node root, ArrayList<Integer> arr){
+        if (root == null){
+            return;
+        }
+
+        arr.add(root.data);
+        if (root.left == null && root.right == null){
+            for(int i : arr){
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+            printPaths(root.left, arr);
+            printPaths(root.right, arr);
+
+        arr.remove(arr.remove(arr.size()-1));
+    }
+
     public static void main(String args[]) {
         int[] values = {8,5,3,1,4,6,10,11,14};
         Node root = null;
@@ -89,8 +126,11 @@ public class BST {
         }
         inOrder(root);
         System.out.println();
-        root = delete(root,8 );
-        inOrder(root);
+//        root = delete(root,8 );
+//        inOrder(root);
+
+//        printInRange(root, 4,12);
+        printPaths(root, new ArrayList<Integer>());
     }
 
 
